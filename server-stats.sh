@@ -20,3 +20,19 @@ mem_free_percent=$(echo "100 * $mem_free / $memory_total" | bc)
 # Output memory usage
 echo "Memory Used: $mem_used MB($mem_usage_percent%)"
 echo "Memory Free: $mem_free MB($mem_free_percent%)"
+
+######################################
+# Total disk usage
+# Grab total, used, available and percent used
+disk_size=$(df | awk 'NR==3 {print $1}')
+disk_used=$(df | awk 'NR==3 {print $2}')
+disk_avbl=$(df | awk 'NR==3 {print $3}')
+disk_used_percent=$(df | awk 'NR==3 {print $4}')
+# Calculate disk free percentage
+disk_free_percent=$(echo "100 - $disk_used_percent" | bc)
+# Output disk usage
+echo "Disk Size: $disk_size"
+echo "Disk Used: $disk_used B"
+echo "Disk Available: $disk_avbl B"
+echo "Disk Used Percentage: $disk_used_percent%"
+echo "Disk Free Percentage: $disk_free_percent%"
